@@ -1,0 +1,37 @@
+    func main(){
+        makeSlice2 := []int{}
+	    printSlice(makeSlice2)
+	    makeSlice2 = append(makeSlice2, 1)
+	    printSlice(makeSlice2)
+    }
+    func printSlice(s []int) {
+	    fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+    }
+
+    Here cap(makeSlice2) should have give 2 in second print but it gave 1 when run in 
+    my machine and gave 2 when run in chrome go compiler 
+    Why is it giving 1 here ?
+    In my machine it increases capacity by 1->2->4>6
+    and on gocompiler online : 2->4->8
+
+    Go version : go version go1.14.1 linux/amd64
+
+====================================================================
+    //POP elements from slice
+	makeSlice3 := []int{11, 12, 13, 14, 15}
+	printSlice(makeSlice3)
+	makeSlice32 := append(makeSlice3[:2], makeSlice3[4:]...) //removing middle element
+	printSlice(makeSlice32)
+	printSlice(makeSlice3) // very wierd behaviour
+	// this is because we are playing with refrences here and changing makeSlice3 to get
+	// makeSlice32 changes makeSlice3 itself
+
+    RESULT : 
+    len=5 cap=5 [11 12 13 14 15]
+    len=3 cap=5 [11 12 15]
+    len=5 cap=5 [11 12 15 14 15]
+
+    Explain the behaviour ?
+
+==========================================================
+
