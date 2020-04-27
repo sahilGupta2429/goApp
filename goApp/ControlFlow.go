@@ -86,7 +86,7 @@ func panicker() {
 	defer func() {
 		if err := recover(); err != nil { // recover seems like a catch for panic
 			fmt.Println("Recovered from Painc : ", err)
-			panic("I will panic and stop everything") // this will stop the function
+			//panic("I will panic and stop everything") // this will stop the function
 		}
 
 	}()
