@@ -137,4 +137,5 @@ func main() {
 	loopPrac()
 	contFlow()
 	pointerStudy()
+	functionStudy()
 }
