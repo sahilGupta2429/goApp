@@ -138,4 +138,5 @@ func main() {
 	contFlow()
 	pointerStudy()
 	functionStudy()
+	studyInterfaces()
 }
