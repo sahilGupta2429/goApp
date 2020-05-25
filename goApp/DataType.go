@@ -140,4 +140,5 @@ func main() {
 	functionStudy()
 	studyInterfaces()
 	studyConcurrancy()
+	studyChannels()
 }
