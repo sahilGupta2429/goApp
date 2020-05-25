@@ -139,4 +139,5 @@ func main() {
 	pointerStudy()
 	functionStudy()
 	studyInterfaces()
+	studyConcurrancy()
 }

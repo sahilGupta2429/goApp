@@ -12,7 +12,12 @@ import (
 // empty interfaces
 // type switches
 // implementing with values vs pointerStudy
+
 // best practices
+// Use small, many interfaces eg: io.Reader, io.Writer, interface{}
+// Don't export inteface for types that will be consumed
+// Don't export interfaces for types that will be used by package
+// Design functions and methods to recieve interfaces whenever possible
 
 func studyInterfaces() {
 	var w Writer = ConsoleWriter{}
@@ -56,17 +61,49 @@ func studyInterfaces() {
 		buffer: bytes.NewBuffer([]byte{}),
 	}
 
+	//Type conversion of myObj empty interface to WriterCloser INterface and calling Write and
+	// Close functions on it
+	if wcObj, OK1 := myObj.(WriterCloser); OK1 {
+		fmt.Println("Success on Writer Closer Conversion")
+		wcObj.Write([]byte("Hello How r"))
+		wcObj.Close()
+	}
 	//we can not call any method on it.
 	//Now, Everything can be cast into an object that has no method on it, even integers
 	//int has no method so it can be cast to an empty interface
-	ok := myObj.(io.Reader)
-	fmt.Println(ok)
+	if ioObj, ok2 := myObj.(io.Reader); ok2 {
+		fmt.Println("Success on io.Reader Conversion")
+		ioObj.Read([]byte("Hi 2"))
+	}
 
 	// if ok {
 	// 	fmt.Println(r)
 	// } else {
 	// 	fmt.Println("Conversion Failed")
 	// }
+
+	//Type Switches
+	var iT interface{} = true
+	//var iT interface{} = "0"
+	//var iT interface{} = 0
+	switch iT.(type) {
+	case int:
+		fmt.Println("Its interger")
+	case string:
+		fmt.Println("Its string")
+	case bool:
+		fmt.Println("its bool")
+	default:
+		fmt.Println("yo i dont know")
+	}
+
+	// creating value type interface object
+	//When implementing an interface, if I use a value type the methods that implement the interface
+	// have to all have value reciever, however if I am implementing the interface with a pointer
+	//then o just have to have a method there regardless of the method type.
+	//method set for pointer type is method set for value recirever as well as methods with pointer reciver
+	var myWCValue WriterCloser = &myWrtierCloser{}
+	fmt.Println(myWCValue)
 
 }
 
@@ -127,5 +164,16 @@ func (bwc *BufferedWriterCloser) Write(date []byte) (int, error) {
 }
 
 func (bwc *BufferedWriterCloser) Close() error {
+	return nil
+}
+
+/// Type to pointer and value convertion on interface
+type myWrtierCloser struct{}
+
+func (mwc *myWrtierCloser) Write(data []byte) (int, error) {
+	return 0, nil
+}
+
+func (mwc myWrtierCloser) Close() error {
 	return nil
 }
